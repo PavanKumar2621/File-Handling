@@ -1,8 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-
-using File_Handling;
-using System.Collections;
+﻿using File_Handling;
 
 Console.WriteLine("Hello, World!");
 var filewrite = new FileHandler();
@@ -13,7 +9,8 @@ while (true)
     Console.WriteLine("Welcome to File Handling Concept");
     Console.WriteLine("Select which option You want\n1. Write Date to File.\n2. Read Data From File." +
         "\n3. Write Date to a File to Save in Binary Format.\n4. Retrive Data From File Which is in Binary Format." +
-        "\n5. Exit Program");    
+        "\n5. Copy an image."+
+        "\n6. Exit Program");    
 
     int option = Convert.ToInt16(Console.ReadLine());
     switch (option)
@@ -22,7 +19,8 @@ while (true)
         case 2: call2(); break;
         case 3: call3(); break;
         case 4: call4(); break;
-        case 5: Console.WriteLine("Program Exiting..."); return;
+        case 5: call5(); break;
+        case 6: Console.WriteLine("Program Exiting..."); return;
         default: Console.WriteLine("Wrong Selection."); break;
     }
 }
@@ -62,4 +60,20 @@ void call4()
     FileStream fsr = new FileStream("Binary.txt", FileMode.Open, FileAccess.Read);
     string s = filewrite.RetirveBinaryDataInFile(fsr);
     Console.WriteLine(s);
+}
+void call5()
+{
+    string s = @"C:\Users\HP\OneDrive\Pictures\Screenshots\Image.png";
+    FileStream fsr = new FileStream(s, FileMode.Open, FileAccess.Read);
+    FileStream fsw = new FileStream("ImageCopy.png", FileMode.Create, FileAccess.Write);
+    //int buffer;
+    //while((buffer = fsr.ReadByte()) != -1)
+    //{
+    //    fsw.WriteByte((byte)buffer);
+    //}
+    //fsw.Flush();
+    byte[] buffer = new byte[fsr.Length];
+    fsr.Read(buffer, 0, buffer.Length);
+    fsw.Write(buffer, 0, buffer.Length);
+    Console.WriteLine("Image Copied Successfully.");
 }
